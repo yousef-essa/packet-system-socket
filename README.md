@@ -9,7 +9,7 @@ To get the sample working, do the following:
 3. head over to client directory.  
   3.1. run `npm run install` to download the required dependencies.  
   3.2. run `npm run start` to initiate the server process.
-4. look at both terminals for the result.
+4. look at both terminals to see the ping/pong debug messages.
 
 ## Todo
 - [ ] Introduce a way for the server <-> client to communicate via the respective terminal.
