@@ -1,5 +1,5 @@
 # packet-system-socket
-A simple one-way communication system from client <-> server that relies on the [packet-system](https://github.com/yousef-essa/packet-system).
+A simple two-way communication system from client <-> server that relies on the [packet-system](https://github.com/yousef-essa/packet-system).
 
 To get the sample working, do the following:
 1. clone this repository.
