@@ -12,10 +12,12 @@ export default class ServerHandler {
 
     constructor(port: number) {
         this.port = port
-        this.packetHandler = new PacketHandler()
+        this.packetHandler = new PacketHandler({
+            debug: true
+        })
 
         this.onClientConnection = this.onClientConnection.bind(this)
-        this.onMessage = this.onMessage.bind(this)
+        this.onClientMessage = this.onClientMessage.bind(this)
         this.onClientDisconnection = this.onClientDisconnection.bind(this)
     }
 
@@ -34,7 +36,7 @@ export default class ServerHandler {
                 const serverConnection = new ClientConnection(connection)
 
                 this.packetHandler.onReceive(packetType, serverConnection, ServerHandler.cleanUp(packetType, message))
-                this.onMessage(connection, message)
+                this.onClientMessage(connection, message)
             })
             connection.on('close', this.onClientDisconnection)
         })
@@ -43,7 +45,7 @@ export default class ServerHandler {
     onClientConnection(connection: WebSocket) {
     }
 
-    onMessage(connection: WebSocket, message: String) {
+    onClientMessage(connection: WebSocket, message: String) {
     }
 
     onClientDisconnection(connection: WebSocket) {

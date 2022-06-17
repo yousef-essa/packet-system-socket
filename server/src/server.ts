@@ -4,7 +4,7 @@ import {Connection} from "packet-system";
 const serverHandler = new ServerHandler(9000)
 
 serverHandler.onClientConnection = onClientEstablished
-serverHandler.onMessage = onClientMessage
+serverHandler.onClientMessage = onClientMessage
 serverHandler.onClientDisconnection = onClientDisconnection
 
 serverHandler.connect()
