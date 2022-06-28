@@ -1,19 +1,20 @@
 import ClientHandler from "./ClientHandler";
 import {Connection} from "packet-system";
 import {SimpleChatPacket} from "packet-system";
+import ClientAdapter from "./ClientAdapter";
 
-const clientHandler = new ClientHandler(9000)
-const packetHandler = clientHandler.getPacketHandler()
+const clientHandler = new ClientHandler()
+const adapter = clientHandler.packetAdapter() as ClientAdapter
 
-clientHandler.onServerConnection = onConnectionEstablished
-clientHandler.onServerMessage = onServerMessage
-clientHandler.onServerDisconnection = onServerDisconnection
+adapter.onServerEstablish = onServerEstablish
+adapter.onServerMessage = onServerMessage
+adapter.onServerClose = onServerClose
 
-clientHandler.connect()
+function onServerEstablish(connection: Connection) {
+    console.log('Established a connection with the server!')
 
-function onConnectionEstablished(connection: Connection) {
     // sends a simple chat packet to server connection
-    packetHandler.send(new SimpleChatPacket("Ping"), connection)
+    clientHandler.send(new SimpleChatPacket("Ping"), connection)
 }
 
 function onServerMessage(_: Connection, message: string) {
@@ -21,6 +22,8 @@ function onServerMessage(_: Connection, message: string) {
     console.log(`received message from server: ${message}`)
 }
 
-function onServerDisconnection() {
-    console.log(`Demolished a connection from the server!`)
+function onServerClose() {
+    console.log(`The connection from the server got closed!`)
 }
+
+clientHandler.connect()

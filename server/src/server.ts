@@ -1,15 +1,15 @@
 import ServerHandler from "./ServerHandler";
 import {Connection} from "packet-system";
+import ServerAdapter from "./ServerAdapter";
 
-const serverHandler = new ServerHandler(9000)
+const serverHandler = new ServerHandler()
+const adapter = serverHandler.packetAdapter() as ServerAdapter
 
-serverHandler.onClientConnection = onClientEstablished
-serverHandler.onClientMessage = onClientMessage
-serverHandler.onClientDisconnection = onClientDisconnection
+adapter.onClientEstablish = onClientEstablish
+adapter.onClientMessage = onClientMessage
+adapter.onClientClose = onClientClose
 
-serverHandler.connect()
-
-function onClientEstablished() {
+function onClientEstablish() {
     console.log('Established a connection with a client!')
 }
 
@@ -18,8 +18,8 @@ function onClientMessage(_: Connection, message: string) {
     console.log(`received message from client: ${message}`)
 }
 
-function onClientDisconnection() {
+function onClientClose() {
     console.log(`Demolished a connection from a client!`)
 }
 
-console.log('Listening to port 9000')
+serverHandler.connect()
