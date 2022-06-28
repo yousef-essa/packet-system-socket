@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm install",
-    "start": "esrun src/server.ts"
+    "server": "esrun src/server.ts"
   },
   "keywords": [],
   "author": "",
